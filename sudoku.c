@@ -1,18 +1,18 @@
-#include <fstream>
+#include <stdio.h>
 
-int n, m, row, column, table[10][10];
-bool set[10][10];
+short n, m, row, column, table[10][10], set[10][10];
 
 void read() {
-    std::ifstream f("data.txt");
-    f >> n >> m;
+    FILE *f = fopen("data.txt", "r");
+    fscanf(f, "%hd", &n);
+    fscanf(f, "%hd", &m);
     for (int i = 0; i < n; i++)
         for (int j = 0; j < m; j++) {
-            f >> table[i][j];
+            fscanf(f, "%hd", &table[i][j]);
             if (table[i][j])
-                set[i][j] = true;
+                set[i][j] = 1;
         }
-    f.close();
+    fclose(f);
 }
 
 void init() {
@@ -27,7 +27,7 @@ int successor() {
     return 0;
 }
 
-bool solution() {
+short solution() {
     for (int j = column + 1; j < m; j++)
         if (set[row][j] == 0)
             return 0;
@@ -36,21 +36,21 @@ bool solution() {
         for (int j = 0; j < m; j++)
             if (set[i][j] == 0)
                 return 0;
-    
+
     return 1;
 }
 
 void output() {
-    std::ofstream g("output.txt");
+    FILE *g = fopen("output.txt", "w");
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++)
-            g << table[i][j] << ' ';
-        g << '\n';
+            fprintf(g, "%hd ", table[i][j]);
+        fputc('\n', g);
     }
-    g.close();
+    fclose(g);
 }
 
-bool valid() {
+short valid() {
     if (row > 0 || column > 0) {
         for (int i = 0; i < row; i++)
             if (table[i][column] == table[row][column])
