@@ -1,8 +1,4 @@
-#include <Windows.h>
-
-#include <cstring>
 #include <fstream>
-#include <iostream>
 
 int n, m, row, column, table[10][10];
 bool set[10][10];
